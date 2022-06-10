@@ -1,19 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { logoutAPI } from "../store/auth/auth.actions";
 
 const Navbar = () => {
-  const isAuthenticated = true;
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.auth);
+
   const handleLoginClick = () => {
-    // login screen
-    if (isAuthenticated) {
-      navigate("/login");
-      // he wants to logout
-    } else {
-      // he wants to login
-      navigate("/login");
-    }
+    dispatch(logoutAPI());
   };
+
   return (
     <div
       data-cy="navbar"
@@ -41,7 +38,7 @@ const Navbar = () => {
         }}
       >
         <button data-cy="navbar-login-logout-button" onClick={handleLoginClick}>
-          {isAuthenticated ? "Logout" : "Login"}
+          {isAuth ? "Logout" : "Login"}
         </button>
       </div>
     </div>
